@@ -1,4 +1,4 @@
-module github.com/refraction-networking/utls
+module github.com/vimbing/vutls
 
 go 1.21
 
