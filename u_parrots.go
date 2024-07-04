@@ -105,8 +105,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&UtlsCompressCertExtension{
 					Algorithms: []CertCompressionAlgo{
 						CertCompressionBrotli,
-						0x0000,
-						CertCompressionZlib,
 					},
 				},
 				&UtlsGREASEExtension{},
