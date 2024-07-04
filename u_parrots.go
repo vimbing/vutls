@@ -91,12 +91,12 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					PKCS1WithSHA1,
 				}},
 				&SCTExtension{},
-				&KeyShareExtension{KeyShares: []KeyShare{{Group: X25519}}},
+				&KeyShareExtension{KeyShares: []KeyShare{{Group: CurveP256}}},
 				&PSKKeyExchangeModesExtension{[]uint8{
 					PskModeDHE,
 				}},
 				&SupportedVersionsExtension{[]uint16{
-					VersionSSL30,
+					0x090,
 					VersionTLS13,
 					VersionTLS12,
 					VersionTLS11,
