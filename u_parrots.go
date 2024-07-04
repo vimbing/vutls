@@ -96,7 +96,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					PskModeDHE,
 				}},
 				&SupportedVersionsExtension{[]uint16{
-					0x05A,
 					VersionTLS13,
 					VersionTLS12,
 					VersionTLS11,
