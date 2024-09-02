@@ -894,7 +894,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 			CompressionMethods: []byte{
 				0x00, // compressionNone
 			},
-			Extensions: ShuffleChromeTLSExtensions([]TLSExtension{
+			Extensions: []TLSExtension{
 				&UtlsGREASEExtension{},
 				&UtlsCompressCertExtension{[]CertCompressionAlgo{
 					CertCompressionBrotli,
@@ -942,7 +942,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					{Group: X25519},
 				}},
 				&UtlsGREASEExtension{},
-			}),
+			},
 		}, nil
 	// Chrome w/ Post-Quantum Key Agreement and ECH
 	case HelloChrome_120_PQ:
@@ -3284,4 +3284,3 @@ func removeRC4Ciphers(s []uint16) []uint16 {
 	}
 	return s[:sliceLen]
 }
-
