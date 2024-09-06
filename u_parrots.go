@@ -972,7 +972,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&SupportedPointsExtension{SupportedPoints: []byte{
 					0,
 				}},
-				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
 				&ALPNExtension{AlpnProtocols: []string{"h2", "http/1.1"}},
 				&StatusRequestExtension{},
 				&SNIExtension{},
@@ -984,7 +983,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					CertCompressionBrotli,
 				}},
 				&SCTExtension{},
-				BoringGREASEECH(),
 				&SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []SignatureScheme{
 					ECDSAWithP256AndSHA256,
 					PSSWithSHA256,
@@ -1015,7 +1013,9 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					CurveP384,
 				}},
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{OmitEmptyPsk: true},
+				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
+				BoringGREASEECH(),
+				&UtlsPreSharedKeyExtension{},
 			}),
 		}, nil
 	// Chrome w/ Post-Quantum Key Agreement and ECH
