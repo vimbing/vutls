@@ -1012,9 +1012,9 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					CurveP256,
 					CurveP384,
 				}},
-				&UtlsGREASEExtension{},
 				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
 				BoringGREASEECH(),
+				&UtlsGREASEExtension{},
 				&UtlsPreSharedKeyExtension{},
 			}),
 		}, nil
