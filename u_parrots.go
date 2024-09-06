@@ -2603,7 +2603,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				}},
 				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{},
+				&FakePreSharedKeyExtension{},
 			},
 		}, nil
 	case HelloChrome_112_PSK_Shuf:
