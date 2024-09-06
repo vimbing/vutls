@@ -1015,7 +1015,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					CurveP384,
 				}},
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{},
+				&UtlsPreSharedKeyExtension{OmitEmptyPsk: true},
 			}),
 		}, nil
 	// Chrome w/ Post-Quantum Key Agreement and ECH
