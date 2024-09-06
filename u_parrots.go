@@ -945,8 +945,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 			},
 		}, nil
 	case HelloChrome_128:
-		emptyConfig.OmitEmptyPsk = true
-
 		return ClientHelloSpec{
 			CipherSuites: []uint16{
 				GREASE_PLACEHOLDER,
@@ -978,9 +976,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&StatusRequestExtension{},
 				&SNIExtension{},
 				&RenegotiationInfoExtension{Renegotiation: RenegotiateOnceAsClient},
-				&PSKKeyExchangeModesExtension{[]uint8{
-					PskModeDHE,
-				}},
+
 				&UtlsCompressCertExtension{[]CertCompressionAlgo{
 					CertCompressionBrotli,
 				}},
@@ -1016,8 +1012,10 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				}},
 				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
 				BoringGREASEECH(),
+				&PSKKeyExchangeModesExtension{[]uint8{
+					PskModeDHE,
+				}},
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{OmitEmptyPsk: true},
 			}),
 		}, nil
 	// Chrome w/ Post-Quantum Key Agreement and ECH
