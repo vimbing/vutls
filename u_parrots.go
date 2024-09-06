@@ -945,6 +945,8 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 			},
 		}, nil
 	case HelloChrome_128:
+		emptyConfig.OmitEmptyPsk = true
+
 		return ClientHelloSpec{
 			CipherSuites: []uint16{
 				GREASE_PLACEHOLDER,
