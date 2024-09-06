@@ -1015,7 +1015,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
 				BoringGREASEECH(),
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{},
+				&FakePreSharedKeyExtension{},
 			}),
 		}, nil
 	// Chrome w/ Post-Quantum Key Agreement and ECH
@@ -2603,7 +2603,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				}},
 				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
 				&UtlsGREASEExtension{},
-				&FakePreSharedKeyExtension{},
+				&UtlsPreSharedKeyExtension{},
 			},
 		}, nil
 	case HelloChrome_112_PSK_Shuf:
