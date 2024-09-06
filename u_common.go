@@ -624,6 +624,7 @@ var (
 	// Chrome ECH
 	HelloChrome_120 = ClientHelloID{helloChrome, "120", nil, nil}
 	HelloChrome_124 = ClientHelloID{helloChrome, "124", nil, nil}
+	HelloChrome_128 = ClientHelloID{helloChrome, "128", nil, nil}
 	// Chrome w/ Post-Quantum Key Agreement and Encrypted ClientHello
 	HelloChrome_120_PQ = ClientHelloID{helloChrome, "120_PQ", nil, nil}
 
