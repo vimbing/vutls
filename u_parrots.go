@@ -1121,7 +1121,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 			CompressionMethods: []byte{
 				0x00, // compressionNone
 			},
-			Extensions: ShuffleChromeTLSExtensions([]TLSExtension{
+			Extensions: []TLSExtension{
 				&UtlsGREASEExtension{},
 				&SessionTicketExtension{},
 				&ApplicationSettingsExtension{SupportedProtocols: []string{
@@ -1177,7 +1177,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&ExtendedMasterSecretExtension{},
 				&UtlsGREASEExtension{},
 				&UtlsPreSharedKeyExtension{},
-			}),
+			},
 		}, nil
 	case HelloChrome_120_PQ:
 		return ClientHelloSpec{
