@@ -1173,7 +1173,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				}},
 				&ExtendedMasterSecretExtension{},
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{},
+				&UtlsPreSharedKeyExtension{OmitEmptyPsk: true},
 			}),
 		}, nil
 	case HelloChrome_120_PQ:
