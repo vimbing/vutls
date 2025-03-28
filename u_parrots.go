@@ -1127,9 +1127,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&ApplicationSettingsExtension{SupportedProtocols: []string{
 					"h2",
 				}},
-				&RenegotiationInfoExtension{
-					Renegotiation: RenegotiateOnceAsClient, // CHECK
-				},
+				&RenegotiationInfoExtension{Renegotiation: RenegotiateOnceAsClient},
 				&SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []SignatureScheme{
 					ECDSAWithP256AndSHA256,
 					PSSWithSHA256,
@@ -1175,7 +1173,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				}},
 				&ExtendedMasterSecretExtension{},
 				&UtlsGREASEExtension{},
-				BoringGREASEECH(),
 				&UtlsPreSharedKeyExtension{},
 			}),
 		}, nil
