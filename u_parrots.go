@@ -2659,7 +2659,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&SNIExtension{},
 				BoringGREASEECH(),
 				&UtlsGREASEExtension{},
-				&UtlsPreSharedKeyExtension{OmitEmptyPsk: true},
+				&FakePreSharedKeyExtension{},
 			},
 		}, nil
 	case HelloQQ_11_1:
