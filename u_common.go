@@ -661,6 +661,8 @@ var (
 
 	HelloSX         = ClientHelloID{helloIOS, "14", nil, nil}
 	HelloZalandoIOS = ClientHelloID{helloIOS, "14", nil, nil}
+
+	HelloChrome140 = ClientHelloID{helloChrome, "140", nil, nil}
 )
 
 type Weights struct {
