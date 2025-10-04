@@ -3051,6 +3051,10 @@ func (uconn *UConn) applyPresetByID(id ClientHelloID) (err error) {
 	return uconn.ApplyPreset(&spec)
 }
 
+func (uconn *UConn) applyBySpec(spec *ClientHelloSpec) (err error) {
+	return uconn.ApplyPreset(spec)
+}
+
 // ApplyPreset should only be used in conjunction with HelloCustom to apply custom specs.
 // Fields of TLSExtensions that are slices/pointers are shared across different connections with
 // same ClientHelloSpec. It is advised to use different specs and avoid any shared state.

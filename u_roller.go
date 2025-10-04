@@ -47,8 +47,9 @@ func NewRoller() (*Roller, error) {
 // If tcp connection fails or all HelloIDs are tried, returns with last error.
 //
 // Usage examples:
-//    Dial("tcp4", "google.com:443", "google.com")
-//    Dial("tcp", "10.23.144.22:443", "mywebserver.org")
+//
+//	Dial("tcp4", "google.com:443", "google.com")
+//	Dial("tcp", "10.23.144.22:443", "mywebserver.org")
 func (c *Roller) Dial(network, addr, serverName string) (*UConn, error) {
 	helloIDs := make([]ClientHelloID, len(c.HelloIDs))
 	copy(helloIDs, c.HelloIDs)
@@ -82,7 +83,7 @@ func (c *Roller) Dial(network, addr, serverName string) (*UConn, error) {
 			return nil, err // on tcp Dial failure return with error right away
 		}
 
-		client := UClient(tcpConn, nil, helloID)
+		client := UClient(tcpConn, nil, helloID, nil)
 		client.SetSNI(serverName)
 		client.SetDeadline(time.Now().Add(c.TlsHandshakeTimeout))
 		err = client.Handshake()

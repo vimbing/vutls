@@ -581,6 +581,8 @@ var (
 	// UConn.Extensions will be completely ignored.
 	HelloGolang = ClientHelloID{helloGolang, helloAutoVers, nil, nil}
 
+	HelloFromProvidedSpec = ClientHelloID{"hellospec", helloAutoVers, nil, nil}
+
 	// HelloCustom will prepare ClientHello with empty uconn.Extensions so you can fill it with
 	// TLSExtensions manually or use ApplyPreset function
 	HelloCustom = ClientHelloID{helloCustom, helloAutoVers, nil, nil}

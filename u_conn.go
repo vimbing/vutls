@@ -27,8 +27,10 @@ const BuildByGoTLS ClientHelloBuildStatus = 2
 type UConn struct {
 	*Conn
 
-	Extensions        []TLSExtension
-	ClientHelloID     ClientHelloID
+	Extensions      []TLSExtension
+	ClientHelloID   ClientHelloID
+	ClientHelloSpec *ClientHelloSpec
+
 	sessionController *sessionController
 
 	clientHelloBuildStatus ClientHelloBuildStatus
@@ -55,13 +57,13 @@ type UConn struct {
 
 // UClient returns a new uTLS client, with behavior depending on clientHelloID.
 // Config CAN be nil, but make sure to eventually specify ServerName.
-func UClient(conn net.Conn, config *Config, clientHelloID ClientHelloID) *UConn {
+func UClient(conn net.Conn, config *Config, clientHelloID ClientHelloID, clientHelloSpec *ClientHelloSpec) *UConn {
 	if config == nil {
 		config = &Config{}
 	}
 	tlsConn := Conn{conn: conn, config: config, isClient: true}
 	handshakeState := PubClientHandshakeState{C: &tlsConn, Hello: &PubClientHelloMsg{}}
-	uconn := UConn{Conn: &tlsConn, ClientHelloID: clientHelloID, HandshakeState: handshakeState}
+	uconn := UConn{Conn: &tlsConn, ClientHelloID: clientHelloID, HandshakeState: handshakeState, ClientHelloSpec: clientHelloSpec}
 	uconn.HandshakeState.uconn = &uconn
 	uconn.handshakeFn = uconn.clientHandshake
 	uconn.sessionController = newSessionController(&uconn)
@@ -108,6 +110,12 @@ func (uconn *UConn) BuildHandshakeState() error {
 		}
 		uconn.HandshakeState.C = uconn.Conn
 		uconn.clientHelloBuildStatus = BuildByGoTLS
+	} else if uconn.ClientHelloID == HelloFromProvidedSpec {
+		err := uconn.applyBySpec(uconn.ClientHelloSpec)
+
+		if err != nil {
+			return err
+		}
 	} else {
 		uAssert(uconn.clientHelloBuildStatus == BuildByUtls || uconn.clientHelloBuildStatus == NotBuilt, "BuildHandshakeState failed: invalid call, client hello has already been built by go-tls")
 		if uconn.clientHelloBuildStatus == NotBuilt {
