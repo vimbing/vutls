@@ -88,7 +88,9 @@ func UClient(conn net.Conn, config *Config, clientHelloID ClientHelloID, clientH
 // amd should only be called explicitly to inspect/change fields of
 // default/mimicked ClientHello.
 func (uconn *UConn) BuildHandshakeState() error {
-	if uconn.ClientHelloID == HelloGolang {
+	if uconn.ClientHelloSpec != nil {
+		return uconn.applyBySpec(uconn.ClientHelloSpec)
+	} else if uconn.ClientHelloID == HelloGolang {
 		if uconn.clientHelloBuildStatus == BuildByGoTLS {
 			return nil
 		}
@@ -110,12 +112,6 @@ func (uconn *UConn) BuildHandshakeState() error {
 		}
 		uconn.HandshakeState.C = uconn.Conn
 		uconn.clientHelloBuildStatus = BuildByGoTLS
-	} else if uconn.ClientHelloID == HelloFromProvidedSpec {
-		err := uconn.applyBySpec(uconn.ClientHelloSpec)
-
-		if err != nil {
-			return err
-		}
 	} else {
 		uAssert(uconn.clientHelloBuildStatus == BuildByUtls || uconn.clientHelloBuildStatus == NotBuilt, "BuildHandshakeState failed: invalid call, client hello has already been built by go-tls")
 		if uconn.clientHelloBuildStatus == NotBuilt {
