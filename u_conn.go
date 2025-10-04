@@ -27,10 +27,8 @@ const BuildByGoTLS ClientHelloBuildStatus = 2
 type UConn struct {
 	*Conn
 
-	Extensions      []TLSExtension
-	ClientHelloID   ClientHelloID
-	ClientHelloSpec *ClientHelloSpec
-
+	Extensions        []TLSExtension
+	ClientHelloID     ClientHelloID
 	sessionController *sessionController
 
 	clientHelloBuildStatus ClientHelloBuildStatus
@@ -57,13 +55,13 @@ type UConn struct {
 
 // UClient returns a new uTLS client, with behavior depending on clientHelloID.
 // Config CAN be nil, but make sure to eventually specify ServerName.
-func UClient(conn net.Conn, config *Config, clientHelloID ClientHelloID, clientHelloSpec *ClientHelloSpec) *UConn {
+func UClient(conn net.Conn, config *Config, clientHelloID ClientHelloID) *UConn {
 	if config == nil {
 		config = &Config{}
 	}
 	tlsConn := Conn{conn: conn, config: config, isClient: true}
 	handshakeState := PubClientHandshakeState{C: &tlsConn, Hello: &PubClientHelloMsg{}}
-	uconn := UConn{Conn: &tlsConn, ClientHelloID: clientHelloID, HandshakeState: handshakeState, ClientHelloSpec: clientHelloSpec}
+	uconn := UConn{Conn: &tlsConn, ClientHelloID: clientHelloID, HandshakeState: handshakeState}
 	uconn.HandshakeState.uconn = &uconn
 	uconn.handshakeFn = uconn.clientHandshake
 	uconn.sessionController = newSessionController(&uconn)
@@ -88,9 +86,7 @@ func UClient(conn net.Conn, config *Config, clientHelloID ClientHelloID, clientH
 // amd should only be called explicitly to inspect/change fields of
 // default/mimicked ClientHello.
 func (uconn *UConn) BuildHandshakeState() error {
-	if uconn.ClientHelloSpec != nil {
-		return uconn.applyBySpec(uconn.ClientHelloSpec)
-	} else if uconn.ClientHelloID == HelloGolang {
+	if uconn.ClientHelloID == HelloGolang {
 		if uconn.clientHelloBuildStatus == BuildByGoTLS {
 			return nil
 		}

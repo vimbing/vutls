@@ -636,6 +636,7 @@ var (
 
 	HelloChrome_131 = ClientHelloID{helloChrome, "131", nil, nil}
 	HelloChrome_134 = ClientHelloID{helloChrome, "134", nil, nil}
+	HelloChrome_140 = ClientHelloID{helloChrome, "140", nil, nil}
 
 	HelloIOS_Auto = HelloIOS_14
 	HelloIOS_11_1 = ClientHelloID{helloIOS, "111", nil, nil} // legacy "111" means 11.1
@@ -661,8 +662,6 @@ var (
 
 	HelloSX         = ClientHelloID{helloIOS, "14", nil, nil}
 	HelloZalandoIOS = ClientHelloID{helloIOS, "14", nil, nil}
-
-	HelloChrome140 = ClientHelloID{helloChrome, "140", nil, nil}
 )
 
 type Weights struct {

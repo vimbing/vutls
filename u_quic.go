@@ -25,7 +25,7 @@ type UQUICConn struct {
 //
 // The config's MinVersion must be at least TLS 1.3.
 func UQUICClient(config *QUICConfig, clientHelloID ClientHelloID) *UQUICConn {
-	return newUQUICConn(UClient(nil, config.TLSConfig, clientHelloID, nil))
+	return newUQUICConn(UClient(nil, config.TLSConfig, clientHelloID))
 }
 
 func newUQUICConn(uconn *UConn) *UQUICConn {
